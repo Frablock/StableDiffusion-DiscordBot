@@ -7,6 +7,6 @@
     [NVidia](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Install-and-Run-on-NVidia-GPUs) 
     [AMD GPUs](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Install-and-Run-on-AMD-GPUs)
     [Intel CPUs, Intel GPUs](https://github.com/openvinotoolkit/stable-diffusion-webui/wiki/Installation-on-Intel-Silicon)
- - Put your bot Token in the `.env` file
+ - Put your bot Token in the `.env` file ([How to create a discord bot](https://www.ionos.com/digitalguide/server/know-how/creating-discord-bot/))
  - Run `stable_bot.py`
 - Enjoy
