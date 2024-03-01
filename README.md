@@ -8,6 +8,8 @@
  - the famous /imagine command (Text to image)
  - /transform (Image to Image)
  - /inpaint (Precise Image to Image)
+ - Compatible with SD 1.5; SD 2; SDXL
+ - LoRA support
 
 # Instalation
  - Install StableDiffusion
@@ -23,3 +25,4 @@
 # Todo
  - Remake Inpainting (Commands+Menu)
  - Localization
+ - Make a command to show all the LoRAs
