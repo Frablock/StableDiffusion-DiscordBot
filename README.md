@@ -4,6 +4,11 @@
  
  ![https://raw.githubusercontent.com/Frablock/StableDiffusion-DiscordBot/main/image_cache/coffee.webp](https://raw.githubusercontent.com/Frablock/StableDiffusion-DiscordBot/main/image_cache/coffee.webp)
 
+# Features
+ - the famous /imagine command (Text to image)
+ - /transform (Image to Image)
+ - /inpaint (Precise Image to Image)
+
 # Instalation
  - Install StableDiffusion
    - Make sure the required [dependencies](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Dependencies) are met and follow the instructions available for:
