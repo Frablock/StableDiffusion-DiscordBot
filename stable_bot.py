@@ -70,9 +70,6 @@ async def on_ready():
 async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = ""):
     await ctx.send(random.choice(messages_attente), ephemeral=True)
 
-    # Simulate a long-running task
-    #await asyncio.sleep(20)
-    
     image = await get_image(ctx.author,prompt,negative_prompt)
 
     # Update the response after processing is complete
@@ -107,9 +104,6 @@ async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "
 async def transform(ctx: SlashContext, image_url: str, prompt: str = "", negative_prompt: str = "", denoising: float = 0.5):
     await ctx.send(random.choice(messages_attente), ephemeral=True)
 
-    # Simulate a long-running task
-    #await asyncio.sleep(20)
-    
     if not 0<=denoising<=1:
         await ctx.send("Incorrect denoising",ephemeral=True)
         return
@@ -128,11 +122,6 @@ async def transform(ctx: SlashContext, image_url: str, prompt: str = "", negativ
 
 inpaint_action_menu: list[ActionRow] = [
     ActionRow(
-        #Button(
-        #    custom_id="valider-"+str(ctx.author.id),
-        #    style=ButtonStyle.GREEN,
-        #    label="Valider",
-        #),
         StringSelectMenu(
             StringSelectOption(
                 label="Bigger",
