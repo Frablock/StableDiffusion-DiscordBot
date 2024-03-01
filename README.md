@@ -16,4 +16,5 @@
 - Enjoy
 
 # Todo
- - Remake Inpainting (Command+Menu)
+ - Remake Inpainting (Commands+Menu)
+ - Localization
