@@ -1,5 +1,7 @@
 # StableDiffusion DiscordBot
  A midjourney like bot for discord. Powered by StableDiffusion
+
+ 
  ![https://raw.githubusercontent.com/Frablock/StableDiffusion-DiscordBot/main/image_cache/coffee.webp](https://raw.githubusercontent.com/Frablock/StableDiffusion-DiscordBot/main/image_cache/coffee.webp)
 
 # Instalation
