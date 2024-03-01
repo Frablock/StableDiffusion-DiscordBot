@@ -12,7 +12,7 @@
  - LoRA support
 
 # Instalation
- - Install StableDiffusion
+ - Install StableDiffusion (With AUTOMATIC1111 WebUI)
    - Make sure the required [dependencies](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Dependencies) are met and follow the instructions available for:
     [NVidia](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Install-and-Run-on-NVidia-GPUs) 
     [AMD GPUs](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Install-and-Run-on-AMD-GPUs)
