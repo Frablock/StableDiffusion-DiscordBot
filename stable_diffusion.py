@@ -12,10 +12,19 @@ url = "http://127.0.0.1:7860"
 
 async def get_image(aid, txt="", n_txt=""):
         
+    # Define the size of the image to generate (SQUARE).
+    size = 768
+
+    # Define the payload to send.
     payload = {
         "prompt": txt,
         "negative_prompt": n_txt,
-        "steps": 20
+        "steps": 14,
+        "width": 960,
+        "height":  540,
+        "sampler_name" : sampler,
+        "style": [style],
+        "cfg_scale": 4
     }
     
     # Send said payload to said URL through the API.
@@ -66,7 +75,7 @@ async def sd_inpaint(aid, im, mask_im, p_env, n_p_mod="", denoising=0.75):
             "prompt": p_env,
             "negative_prompt": n_p_mod,
             "denoising_strength": denoising,
-            "steps": 20,
+            "steps": 14,
             "width": img_size[0],
             "height": img_size[1],
             "mask": mask_base64,
@@ -108,7 +117,7 @@ async def img2img(aid, im, p_env="", n_p_mod="", denoising=0.6):
             "prompt": p_env,
             "negative_prompt": n_p_mod,
             "denoising_strength": denoising,
-            "steps": 20,
+            "steps": 14,
             "width": img_size[0],
             "height": img_size[1],
         }
