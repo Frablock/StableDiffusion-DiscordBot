@@ -11,20 +11,38 @@ import os
 
 # Define the URL and the payload to send.
 url = dotenv_values(".env")["URL_SD"]
+SQUARE = dotenv_values(".env")["SQUARE_IMG_SIZE"]
+WIDTH = dotenv_values(".env")["HEIGHT_IMG_SIZE"]
+HEIGHT = dotenv_values(".env")["WIDTH_IMG_SIZE"]
+STEPS = dotenv_values(".env")["STEPS"]
 
-async def get_image(aid, txt="", n_txt="",style="",sampler="DPM++ 2M Karras"):
-
-    # Define the payload to send.
-    payload = {
-        "prompt": txt,
-        "negative_prompt": n_txt,
-        "steps": dotenv_values(".env")["STEPS"],
-        "width": dotenv_values(".env")["WIDTH"],
-        "height":  dotenv_values(".env")["HEIGHT"],
-        "sampler_name" : sampler,
-        "style": [style],
-        "cfg_scale": dotenv_values(".env")["CFG_SCALE"],
-    }
+async def get_image(aid, txt="", n_txt="", ratio=dotenv_values(".env")["DEFAULT_IMG_RATIO"]):
+    if (ratio == "SQUARE"):
+        payload = {
+            "prompt": txt,
+            "negative_prompt": n_txt,
+            "width": SQUARE,
+            "height": SQUARE,
+            "steps": STEPS
+        }
+    elif (ratio == "PORTRAIT"):
+        payload = {
+            "prompt": txt,
+            "negative_prompt": n_txt,
+            "width": HEIGHT,
+            "height": WIDTH,
+            "steps": STEPS
+        }
+    elif (ratio == "LANDSCAPE"):
+        payload = {
+            "prompt": txt,
+            "negative_prompt": n_txt,
+            "width": WIDTH,
+            "height": HEIGHT,
+            "steps": STEPS
+        }
+    else:
+        print("DEFAULT_IMG_RATIO is not set to a valid value. Please set it to either 'SQUARE', 'PORTRAIT' or 'LANDSCAPE'.")
     
     # Send said payload to said URL through the API.
     response = requests.post(url=f'{url}/sdapi/v1/txt2img', json=payload)
@@ -74,7 +92,7 @@ async def sd_inpaint(aid, im, mask_im, p_env, n_p_mod="", denoising=0.75):
             "prompt": p_env,
             "negative_prompt": n_p_mod,
             "denoising_strength": denoising,
-            "steps": dotenv_values(".env")["STEPS"],
+            "steps": STEPS,
             "width": img_size[0],
             "height": img_size[1],
             "mask": mask_base64,
@@ -116,7 +134,7 @@ async def img2img(aid, im, p_env="", n_p_mod="", denoising=0.6):
             "prompt": p_env,
             "negative_prompt": n_p_mod,
             "denoising_strength": denoising,
-            "steps": dotenv_values(".env")["STEPS"],
+            "steps": STEPS,
             "width": img_size[0],
             "height": img_size[1],
         }

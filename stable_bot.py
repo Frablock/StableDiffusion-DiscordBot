@@ -74,22 +74,30 @@ async def on_ready():
     opt_type=OptionType.STRING
 )
 @slash_option(
-    name="style",
-    description="Style de ce que tu veut voir (default par defaut)",
+    name="ratio",
+    description="SQUARE, PORTRAIT or LANDSCAPE output ratio",
     required=False,
     opt_type=OptionType.STRING
 )
-async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "", batch_size: str = "1", style: str = ""):
-    if not 1<=int(batch_size)<=8:
-        await ctx.send("Incorrect batch size",ephemeral=True)
-    else:
-        print("Generating "+batch_size+" images")
-        await ctx.send(random.choice(messages_attente), ephemeral=True)
-        for i in range(int(batch_size)):
-            image = await get_image(ctx.author,prompt,negative_prompt,style)
-            await ctx.send(content="Processing "+str(i+1)+"/"+str(batch_size)+" complete!\n"+prompt+"\nNegatives : "+negative_prompt, files=[image])
-            os.remove(image)
-        print("done")
+async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "", batch_size: int =1, ratio: str = "SQUARE"):
+    if not 1<=batch_size<=int(MAX_BATCH_SIZE):
+        await ctx.send(content=l.get(ctx.locale, "invalid_batch_size", MAX_BATCH_SIZE),ephemeral=True)
+        return
+
+    await ctx.send(l.get(ctx.locale, random.choice(waiting_messages)), ephemeral=True)
+
+    for i in range(batch_size):
+        image = await get_image(ctx.author,prompt,negative_prompt,ratio)
+
+        embed = Embed(
+            title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, i+1, batch_size),
+            description= l.get(ctx.locale, "description", prompt, negative_prompt) if negative_prompt!="" else l.get(ctx.locale, "description_neg", prompt),
+            footer=l.get(ctx.locale, "footer")
+        )
+
+        # Send the response after processing is complete
+        await ctx.send(embed=embed, files=[image])
+        os.remove(image)
     
 @slash_command(name="transform", description="Transform a picture using StableDiffusion")
 @slash_option(
@@ -129,9 +137,15 @@ async def transform(ctx: SlashContext, image_url: str, prompt: str = "", negativ
         await ctx.send(str(e)+"\nI can't access to this image, please ensure that you give me a working url next time",ephemeral=True)
         return
 
-    # Update the response after processing is complete
-    await ctx.send(content="Processing complete!\n"+prompt+"\nNegatives : "+negative_prompt+"\nImage : "+image_url, files=[image])
-    os.remove(image)
+        embed = Embed(
+            title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, i+1, batch_size),
+            description= l.get(ctx.locale, "description", prompt, negative_prompt),
+            footer=l.get(ctx.locale, "footer"),
+            images=[image_url]
+        )
+        # Send the response after processing is complete
+        await ctx.send(embed=embed, files=[image])
+        os.remove(image)
     
 
 
@@ -276,7 +290,15 @@ async def on_component(event: Component):
             await ctx.send(content=random.choice(messages_attente), ephemeral=True)
             iid, mid = mask.create_image_mask(image_url, int(maskcode_l[1]), int(maskcode_l[2]), int(maskcode_l[0]))
             image = await sd_inpaint(ctx.author,image_url, mid,prompt,negative_prompt)
-            await ctx.send(content="\n[Prompt] "+prompt+"\n[Negatives] "+negative_prompt,files=[image])
+
+            embed = Embed(
+                title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, i+1, batch_size),
+                description= l.get(ctx.locale, "description", prompt, negative_prompt),
+                footer=l.get(ctx.locale, "footer"),
+                images=[image_url]
+            )
+
+            await ctx.send(embed=embed,files=[image])
             os.remove(image)
             os.remove(iid)
             os.remove(mid)
