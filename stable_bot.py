@@ -48,7 +48,6 @@ TOKEN = dotenv_values(".env")["TOKEN"]
 
 bot = interactions.Client(token=TOKEN)
 
-
 @listen()  # this decorator tells snek that it needs to listen for the corresponding event, and run this coroutine
 async def on_ready():
     # This event is called when the bot is ready to respond to commands
@@ -80,20 +79,17 @@ async def on_ready():
     required=False,
     opt_type=OptionType.STRING
 )
-async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "", batch_size: str = "1", style: str = "default"):
-    if not 1<=int(batch_size)<=8000:
+async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "", batch_size: str = "1", style: str = ""):
+    if not 1<=int(batch_size)<=8:
         await ctx.send("Incorrect batch size",ephemeral=True)
     else:
-        if "cat" in prompt.lower() or "chat" in prompt.lower() or "kitten" in prompt.lower() or "kitty" in prompt.lower() or "neko" in prompt.lower() or "nyan" in prompt.lower() or "ねこ" in prompt.lower() or "猫" in prompt.lower() or "gato" in prompt.lower() or "katze" in prompt.lower() or "кошка" in prompt.lower() or "قط" in prompt.lower() or "고양이" in prompt.lower() or "猫" in prompt.lower() or "kucing" in prompt.lower() or "kot" in prompt.lower() or "kedi" in prompt.lower() or "kotka" in prompt.lower() or "katt" in prompt.lower():
-            await ctx.send("Vous avez demandé un chat, mais je ne suis pas sûr de pouvoir vous aider avec ça.",ephemeral=True)
-        else:
-            print("Generating "+batch_size+" images")
-            await ctx.send(random.choice(messages_attente), ephemeral=True)
-            for i in range(int(batch_size)):
-                image = await get_image(ctx.author,prompt,negative_prompt,style)
-                await ctx.send(content="Processing "+str(i+1)+"/"+str(batch_size)+" complete!\n"+prompt+"\nNegatives : "+negative_prompt, files=[image])
-                os.remove(image)
-            print("done")
+        print("Generating "+batch_size+" images")
+        await ctx.send(random.choice(messages_attente), ephemeral=True)
+        for i in range(int(batch_size)):
+            image = await get_image(ctx.author,prompt,negative_prompt,style)
+            await ctx.send(content="Processing "+str(i+1)+"/"+str(batch_size)+" complete!\n"+prompt+"\nNegatives : "+negative_prompt, files=[image])
+            os.remove(image)
+        print("done")
     
 @slash_command(name="transform", description="Transform a picture using StableDiffusion")
 @slash_option(
