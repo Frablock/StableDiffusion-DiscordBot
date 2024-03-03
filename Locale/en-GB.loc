@@ -1,0 +1,23 @@
+{"locale":"en-GB", "author":"Frablock", "translation":{
+    "waiting_message.0" : "Please wait while the hamster in the CPU spins its wheel.",
+    "waiting_message.1" : "Please wait, we are trying to convince the electrons to move faster.",
+    "waiting_message.2" : "We are taking a coffee break with the server, it shouldn't take too long.",
+    "waiting_message.3" : "Loading... Our programmers are searching for their lost coffee cup.",
+    "waiting_message.4" : "Please wait, we are negotiating with the Wi-Fi to make it faster.",
+    "waiting_message.5" : "The gnome in the hard drive is working hard to find your file. Thank you for your patience.",
+    "waiting_message.6" : "We are having a meditation session with the processor to improve its concentration. Thank you for your patience.",
+    "waiting_message.7" : "Please wait until the painter in the GPU has chosen the colors for your digital artwork.",
+    "waiting_message.8" : "We are counting to infinity. Please be patient, it may take some time.",
+    "waiting_message.9" : "Please wait, the server is juggling with bits. It may take a moment.",
+
+    "invalid_batch_size":"Invalid Batch Size, the batch must be between 1 and %$0",
+    "Invalid_image" : "I can't access to this image, please ensure that you give me a working url next time",
+    "invalid_maskcode" : "%$0 is an invalid maskcode",
+
+    "processing_complete" : "Processing complete!",
+    "processing_complete_batch" : "Processing complete %$0/%$1",
+    "description" : "[Prompt] ```%$0 ```\n[Negatives] ```%$1 ```",
+    "footer": "Do you want to use the image ? check the /credit command",
+
+    "credit" : "Devs :\n- Frablock\n- Rypoint\n\nPowered by : \n- StableDiffusion (StabilityAI)\n - SD WebUI (AUTOMATIC1111)\n\nThe code is under the [GPLv3 licence](https://www.gnu.org/licenses/gpl-3.0.html)\n\nAll generated image are under the [CC4.0-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)\nWhen crediting, please use```Image generated with StableDiffusion by using https://github.com/Frablock/StableDiffusion-DiscordBot. Image under CC4.0-BY-NC-SA - https://creativecommons.org/licenses/by-nc-sa/4.0```"
+}}

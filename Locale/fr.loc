@@ -1,0 +1,23 @@
+{"locale":"fr-FR", "author":"Frablock", "translation":{
+    "waiting_message.0" : "Veuillez patienter pendant que le hamster dans le CPU fait tourner sa roue.",
+    "waiting_message.1" : "Attendez un instant, nous sommes en train de convaincre les électrons de se déplacer plus rapidement.",
+    "waiting_message.2" : "Nous sommes en pause café avec le serveur, ça ne devrait pas prendre trop longtemps.",
+    "waiting_message.3" : "En cours de chargement... Nos programmeurs sont à la recherche de leur tasse de café perdue.",
+    "waiting_message.4" : "Attendez s'il vous plaît, nous sommes en train de négocier avec le Wi-Fi pour qu'il soit plus rapide.",
+    "waiting_message.5" : "Le lutin dans le disque dur travaille dur pour retrouver votre fichier. Merci de patienter.",
+    "waiting_message.6" : "Nous faisons une séance de méditation avec le processeur pour améliorer sa concentration. Merci pour votre patience.",
+    "waiting_message.7" : "Veuillez attendre que le peintre dans le GPU ait terminé de choisir les couleurs de votre œuvre d'art numérique.",
+    "waiting_message.8" : "Nous sommes en train de compter jusqu'à l'infini. Soyez patient, cela peut prendre un certain temps.",
+    "waiting_message.9" : "Attendez s'il vous plaît, le serveur est en train de jongler avec des bits. Ça peut prendre un moment.",
+
+    "invalid_batch_size":"Taille du batch invalide, la taille du batch doit être entre 1 et %$0",
+    "Invalid_image" : "Je ne peux accéder à cette image, veuillez vous assurer de me donner un URL qui fonctionne la prochaine fois !",
+    "invalid_maskcode" : "%$0 est un maskcode invalide",
+
+    "processing_complete" : "Voici votre image!",
+    "processing_complete_batch" : "Voici votre image %$0/%$1",
+    "description" : "[Prompt] ```%$0 ```\n[Anti-prompt] ```%$1 ```",
+    "footer": "Vous souhaitez utiliser l'image ? Jetez un coup d'oeil à la commande /credit",
+
+    "credit" : "Devs :\n- Frablock\n- Rypoint\n\nFonctionne grâce à : \n- StableDiffusion (StabilityAI)\n - SD WebUI (AUTOMATIC1111)\n\nLe code est sous licence [GPLv3 licence](https://www.gnu.org/licenses/gpl-3.0.html)\n\nToutes les images sont sous licence [CC4.0-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr)\nLorsque vous nous créditez, veuillez utiliser ```Image generaté via StableDiffusion en utilisant https://github.com/Frablock/StableDiffusion-DiscordBot. Image sous licence CC4.0-BY-NC-SA - https://creativecommons.org/licenses/by-nc-sa/4.0```"
+}}

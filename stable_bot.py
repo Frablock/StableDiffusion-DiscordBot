@@ -28,18 +28,9 @@ from interactions import Modal, ParagraphText, ShortText, SlashContext, slash_co
 
 import mask
 
-messages_attente = [
-    "Veuillez patienter pendant que le hamster dans le CPU fait tourner sa roue.",
-    "Attendez un instant, nous sommes en train de convaincre les électrons de se déplacer plus rapidement.",
-    "Nous sommes en pause café avec le serveur, ça ne devrait pas prendre trop longtemps.",
-    "En cours de chargement... Nos programmeurs sont à la recherche de leur tasse de café perdue.",
-    "Attendez s'il vous plaît, nous sommes en train de négocier avec le Wi-Fi pour qu'il soit plus rapide.",
-    "Le lutin dans le disque dur travaille dur pour retrouver votre fichier. Merci de patienter.",
-    "Nous faisons une séance de méditation avec le processeur pour améliorer sa concentration. Merci pour votre patience.",
-    "Veuillez attendre que le peintre dans le GPU ait terminé de choisir les couleurs de votre œuvre d'art numérique.",
-    "Nous sommes en train de compter jusqu'à l'infini. Soyez patient, cela peut prendre un certain temps.",
-    "Attendez s'il vous plaît, le serveur est en train de jongler avec des bits. Ça peut prendre un moment.",
-]
+import localization as l
+
+waiting_messages = ["waiting_message."+str(i) for i in range(10)]
 
 
 bot = Client(intents=Intents.DEFAULT)
@@ -77,18 +68,18 @@ async def on_ready():
 )
 async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "", batch_size: int =1):
     if not 1<=batch_size<=int(MAX_BATCH_SIZE):
-        await ctx.send(content="Invalid Batch Size, the batch must be between 1 and "+MAX_BATCH_SIZE,ephemeral=True)
+        await ctx.send(content=l.get(ctx.locale, "invalid_batch_size", MAX_BATCH_SIZE),ephemeral=True)
         return
 
-    await ctx.send(random.choice(messages_attente), ephemeral=True)
+    await ctx.send(l.get(ctx.locale, random.choice(waiting_messages)), ephemeral=True)
 
     for i in range(batch_size):
         image = await get_image(ctx.author,prompt,negative_prompt)
 
         embed = Embed(
-            title="Processing complete!" if batch_size==1 else "Processing complete "+str(i+1)+"/"+str(batch_size),
-            description="[Prompt] ```"+prompt+"```\n[Negatives] ```"+negative_prompt+" ```",
-            footer="Do you want to use the image ? check the /credit command"
+            title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, i+1, batch_size),
+            description= l.get(ctx.locale, "description", prompt, negative_prompt),
+            footer=l.get(ctx.locale, "footer")
         )
 
         # Send the response after processing is complete
@@ -128,10 +119,10 @@ async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "
 )
 async def transform(ctx: SlashContext, image_url: str, prompt: str = "", negative_prompt: str = "", denoising: float = 0.5, batch_size=1):
     if not 1<=batch_size<=int(MAX_BATCH_SIZE):
-        await ctx.send(content="Invalid Batch Size, the batch must be between 1 and "+MAX_BATCH_SIZE,ephemeral=True)
+        await ctx.send(content=l.get(ctx.locale, "invalid_batch_size", MAX_BATCH_SIZE),ephemeral=True)
         return
 
-    await ctx.send(random.choice(messages_attente), ephemeral=True)
+    await ctx.send(random.choice(waiting_messages), ephemeral=True)
 
     if not 0<=denoising<=1:
         await ctx.send("Incorrect denoising",ephemeral=True)
@@ -141,13 +132,13 @@ async def transform(ctx: SlashContext, image_url: str, prompt: str = "", negativ
         try:
             image = await img2img(ctx.author,image_url,prompt,negative_prompt, denoising)
         except Exception as e:
-            await ctx.send(str(e)+"\nI can't access to this image, please ensure that you give me a working url next time",ephemeral=True)
+            await ctx.send(l.get(ctx.locale, "invalid_image"),ephemeral=True)
             return
 
         embed = Embed(
-            title="Processing complete!" if batch_size==1 else "Processing complete "+str(i+1)+"/"+str(batch_size),
-            description="[Prompt] ```"+prompt+"```\n[Negatives] ```"+negative_prompt+" ```",
-            footer="Do you want to use the image ? check the /credit command",
+            title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, i+1, batch_size),
+            description= l.get(ctx.locale, "description", prompt, negative_prompt),
+            footer=l.get(ctx.locale, "footer"),
             images=[image_url]
         )
         # Send the response after processing is complete
@@ -251,7 +242,7 @@ async def inpaint(ctx: SlashContext, image_url: str, mask_code:str, prompt: str 
     try:
         iid, mid = mask.create_image_mask(image_url, int(maskcode_l[1]), int(maskcode_l[2]), int(maskcode_l[0]))
     except Exception as e:
-        await ctx.send(str(e)+"\nI can't access to this image, please ensure that you give me a working url next time",ephemeral=True)
+        await ctx.send(l.get(ctx.locale, "invalid_image"),ephemeral=True)
         return
 
     await ctx.send(mask_code+"\n`"+image_url+"`\n[Prompt] "+prompt+"\n[Negatives] "+negative_prompt, components=inpaint_action_menu, ephemeral=True, files=[iid, mid])
@@ -294,14 +285,14 @@ async def on_component(event: Component):
             maskcode_l[1] = str(int(maskcode_l[1]) + 5)
         
         if value == "validate":
-            await ctx.send(content=random.choice(messages_attente), ephemeral=True)
+            await ctx.send(content=random.choice(waiting_messages), ephemeral=True)
             iid, mid = mask.create_image_mask(image_url, int(maskcode_l[1]), int(maskcode_l[2]), int(maskcode_l[0]))
             image = await sd_inpaint(ctx.author,image_url, mid,prompt,negative_prompt)
 
             embed = Embed(
-                title="Processing complete!",
-                description="[Prompt] ```"+prompt+"```\n[Negatives] ```"+negative_prompt+" ```",
-                footer="Do you want to use the image ? check the /credit command",
+                title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, i+1, batch_size),
+                description= l.get(ctx.locale, "description", prompt, negative_prompt),
+                footer=l.get(ctx.locale, "footer"),
                 images=[image_url]
             )
 
@@ -333,14 +324,14 @@ async def on_modal_answer(ctx: ModalContext, maskcode_text: str):
         os.remove(iid)
         os.remove(mid)
     else:
-        await ctx.send(maskcode_text+" is an invalid maskcode", ephemeral=True)
+        await ctx.send(l.get(ctx.locale,"invalid_maskcode",maskcode_text), ephemeral=True)
 
 @slash_command(name="credit", description="See contributors")
 async def credit(ctx: SlashContext):
     embed = Embed(
         title="Credit",
-        description="Devs :\n- Frablock\n- Rypoint\n\nPowered by : \n- StableDiffusion (StabilityAI)\n - SD WebUI (AUTOMATIC1111)\n\nThe code is under the [GPLv3 licence](https://www.gnu.org/licenses/gpl-3.0.html)\n\nAll generated image are under the [CC4.0-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)\nWhen crediting, please use```Image generated with StableDiffusion by using https://github.com/Frablock/StableDiffusion-DiscordBot. Image under CC4.0-BY-NC-SA - https://creativecommons.org/licenses/by-nc-sa/4.0```",
-        color=0xff0000 # Green color
+        description=l.get(ctx.locale,"credit"),
+        color=0xff0000 # RED color
     )
     await ctx.send(embed=embed)
 
