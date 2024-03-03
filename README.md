@@ -27,3 +27,4 @@
  - Remake Inpainting (Commands+Menu)
  - Localization
  - Make a command to show all the LoRAs
+ - Choice between different image ratio (SQUARE, TALL, WIDE)
