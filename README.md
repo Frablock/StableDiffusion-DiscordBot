@@ -11,6 +11,7 @@
  - Compatible with SD 1.5; SD 2; SDXL
  - LoRA support : `<lora:lora_model:1>`
  - Prompt weighting : `(prompt:1.5)`
+ - Batch output
 
 # Instalation
  - Install StableDiffusion (With AUTOMATIC1111 WebUI)
