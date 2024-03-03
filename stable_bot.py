@@ -77,7 +77,7 @@ async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "
         image = await get_image(ctx.author,prompt,negative_prompt)
 
         embed = Embed(
-            title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, i+1, batch_size),
+            title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, "processing_complete_batch",i+1, batch_size),
             description= l.get(ctx.locale, "description", prompt, negative_prompt),
             footer=l.get(ctx.locale, "footer")
         )
@@ -136,7 +136,7 @@ async def transform(ctx: SlashContext, image_url: str, prompt: str = "", negativ
             return
 
         embed = Embed(
-            title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, i+1, batch_size),
+            title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, "processing_complete_batch",i+1, batch_size),
             description= l.get(ctx.locale, "description", prompt, negative_prompt),
             footer=l.get(ctx.locale, "footer"),
             images=[image_url]
@@ -290,7 +290,7 @@ async def on_component(event: Component):
             image = await sd_inpaint(ctx.author,image_url, mid,prompt,negative_prompt)
 
             embed = Embed(
-                title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, i+1, batch_size),
+                title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, "processing_complete_batch",i+1, batch_size),
                 description= l.get(ctx.locale, "description", prompt, negative_prompt),
                 footer=l.get(ctx.locale, "footer"),
                 images=[image_url]
