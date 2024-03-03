@@ -26,7 +26,7 @@
 
 # Todo
  - Remake Inpainting (Commands+Menu)
- - Localization
+ - Finish the Localization
  - Make a command to show all the LoRAs
  - Choice between different ratio (SQUARE, TALL, WIDE)
 
