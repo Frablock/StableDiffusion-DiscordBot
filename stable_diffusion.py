@@ -1,3 +1,5 @@
+from dotenv import dotenv_values
+
 import requests
 import base64
 
@@ -8,20 +10,20 @@ import random
 import os
 
 # Define the URL and the payload to send.
-url = "http://127.0.0.1:7860"
+url = dotenv_values(".env")["URL_SD"]
 
-async def get_image(aid, txt="", n_txt=""):
+async def get_image(aid, txt="", n_txt="",style="",sampler="DPM++ 2M Karras"):
 
     # Define the payload to send.
     payload = {
         "prompt": txt,
         "negative_prompt": n_txt,
-        "steps": 14,
-        "width": 960,
-        "height":  540,
+        "steps": dotenv_values(".env")["STEPS"],
+        "width": dotenv_values(".env")["WIDTH"],
+        "height":  dotenv_values(".env")["HEIGHT"],
         "sampler_name" : sampler,
         "style": [style],
-        "cfg_scale": 4
+        "cfg_scale": dotenv_values(".env")["CFG_SCALE"],
     }
     
     # Send said payload to said URL through the API.
@@ -72,7 +74,7 @@ async def sd_inpaint(aid, im, mask_im, p_env, n_p_mod="", denoising=0.75):
             "prompt": p_env,
             "negative_prompt": n_p_mod,
             "denoising_strength": denoising,
-            "steps": 14,
+            "steps": dotenv_values(".env")["STEPS"],
             "width": img_size[0],
             "height": img_size[1],
             "mask": mask_base64,
@@ -114,7 +116,7 @@ async def img2img(aid, im, p_env="", n_p_mod="", denoising=0.6):
             "prompt": p_env,
             "negative_prompt": n_p_mod,
             "denoising_strength": denoising,
-            "steps": 14,
+            "steps": dotenv_values(".env")["STEPS"],
             "width": img_size[0],
             "height": img_size[1],
         }
