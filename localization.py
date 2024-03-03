@@ -1,7 +1,7 @@
 import json
 import os
 
-default = "en_GB"
+default = "en"
 
 def get(locale, text_id, *args):
     try:

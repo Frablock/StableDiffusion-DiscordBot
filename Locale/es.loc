@@ -1,0 +1,23 @@
+{"locale":"es_CU", "author":"Frablock", "translation":{
+    "waiting_message.0" : "Por favor, espere mientras el hamster en el CPU gira su rueda.",
+    "waiting_message.1" : "Espera un momento, estamos convenciendo a los electrones para que se muevan más rápido.",
+    "waiting_message.2" : "Estamos en una pausa café con el servidor, no debería tomar mucho tiempo.",
+    "waiting_message.3" : "En proceso de carga... Nuestros programadores están buscando su taza de café perdida.",
+    "waiting_message.4" : "Por favor, espera, estamos negociando con el Wi-Fi para que sea más rápido.",
+    "waiting_message.5" : "El duende en el disco duro está trabajando duro para encontrar tu archivo. Gracias por tu paciencia.",
+    "waiting_message.6" : "Estamos haciendo una sesión de meditación con el procesador para mejorar su concentración. Gracias por tu paciencia.",
+    "waiting_message.7" : "Por favor, espera a que el pintor en el GPU termine de elegir los colores de tu obra de arte digital.",
+    "waiting_message.8" : "Estamos contando hasta el infinito. Por favor, sé paciente, puede tomar un tiempo.",
+    "waiting_message.9" : "Por favor, espera, el servidor está jugando con los bits. Esto puede tomar un momento.",
+
+    "invalid_batch_size":"Tamaño del lote inválido, el tamaño del lote debe estar entre 1 y %$0",
+    "Invalid_image" : "No puedo acceder a esta imagen, por favor asegúrate de proporcionar un URL que funcione la próxima vez!",
+    "invalid_maskcode" : "%$0 es un maskcode inválido",
+
+    "processing_complete" : "¡Aquí está tu imagen!",
+    "processing_complete_batch" : "¡Aquí está tu imagen %$0/%$1!",
+    "description" : "[Prompt] ```%$0 ```\n[Anti-prompt] ```%$1 ```",
+    "footer": "¿Quieres usar la imagen? Echa un vistazo al comando /credit",
+
+    "credit" : "Desarrolladores:\n- Frablock\n- Rypoint\n\nFunciona gracias a:\n- StableDiffusion (StabilityAI)\n - SD WebUI (AUTOMATIC1111)\n\nEl código está bajo licencia [GPLv3 licencia](https://www.gnu.org/licenses/gpl-3.0.html)\n\nTodas las imágenes están bajo licencia [CC4.0-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es)\nCuando nos crédites, por favor usa ```Imagen generada a través de StableDiffusion usando https://github.com/Frablock/StableDiffusion-DiscordBot. Imagen bajo licencia CC4.0-BY-NC-SA - https://creativecommons.org/licenses/by-nc-sa/4.0```"
+}}
