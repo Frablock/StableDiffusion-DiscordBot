@@ -1,7 +1,7 @@
 
 import subprocess
 
-command = ['python', './stabe_bot.py']
+command = ['python', './stable_bot.py']
 
 print("Starting the bot")
 while True:
