@@ -9,12 +9,12 @@ from dotenv import dotenv_values
 
 from stable_diffusion import *
 
-from interactions import OptionType, slash_option, slash_command, SlashContext
+from interactions import OptionType, slash_option, slash_command, SlashContext, Embed
 import interactions
 
 from interactions import Client, Intents, listen
 
-from discord import File, Embed
+from discord import File
 
 import asyncio
 
@@ -293,7 +293,11 @@ async def on_modal_answer(ctx: ModalContext, maskcode_text: str):
 
 @slash_command(name="credit", description="See contributors")
 async def credit(ctx: SlashContext):
-    embed = Embed(title="Credit", description="Devs :\n - Frablock\nRypoint\n\nPowered by : \n - StableDiffusion (StabilityAI)\n - SD WebUI (AUTOMATIC1111)\n\nThe code is under the [GPLv3 licence](https://www.gnu.org/licenses/gpl-3.0.html)\n\nAll generated image are under the [CC4.0-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)", color=0xff0000)
+    embed = Embed(
+        title="Credit",
+        description="Devs :\n - Frablock\n - Rypoint\n\nPowered by : \n - StableDiffusion (StabilityAI)\n - SD WebUI (AUTOMATIC1111)\n\nThe code is under the [GPLv3 licence](https://www.gnu.org/licenses/gpl-3.0.html)\n\nAll generated image are under the [CC4.0-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)",
+        color=0xff0000 # Green color
+    )
     await ctx.send(embed=embed)
 
 bot.start()
