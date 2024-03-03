@@ -73,7 +73,7 @@ async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "
     image = await get_image(ctx.author,prompt,negative_prompt)
 
     # Update the response after processing is complete
-    await ctx.send(content="Processing complete!\n"+prompt+"\nNegatives : "+negative_prompt, files=[image])
+    await ctx.send(content="Processing complete!\n"+prompt+"\nNegatives : "+negative_prompt+"\n\nDo you want to use the image ? check the /credit command", files=[image])
     os.remove(image)
     
 @slash_command(name="transform", description="Transform a picture using StableDiffusion")
@@ -115,7 +115,7 @@ async def transform(ctx: SlashContext, image_url: str, prompt: str = "", negativ
         return
 
     # Update the response after processing is complete
-    await ctx.send(content="Processing complete!\n"+prompt+"\nNegatives : "+negative_prompt+"\nImage : "+image_url, files=[image])
+    await ctx.send(content="# Processing complete!\n"+prompt+"\nNegatives : "+negative_prompt+"\nImage : "+image_url+"\n\nDo you want to use the image ? check the /credit command", files=[image])
     os.remove(image)
     
 
@@ -261,7 +261,7 @@ async def on_component(event: Component):
             await ctx.send(content=random.choice(messages_attente), ephemeral=True)
             iid, mid = mask.create_image_mask(image_url, int(maskcode_l[1]), int(maskcode_l[2]), int(maskcode_l[0]))
             image = await sd_inpaint(ctx.author,image_url, mid,prompt,negative_prompt)
-            await ctx.send(content="\n[Prompt] "+prompt+"\n[Negatives] "+negative_prompt,files=[image])
+            await ctx.send(content="\n[Prompt] "+prompt+"\n[Negatives] "+negative_prompt+"\n\nDo you want to use the image ? check the /credit command",files=[image])
             os.remove(image)
             os.remove(iid)
             os.remove(mid)
