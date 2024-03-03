@@ -11,9 +11,6 @@ import os
 url = "http://127.0.0.1:7860"
 
 async def get_image(aid, txt="", n_txt=""):
-        
-    # Define the size of the image to generate (SQUARE).
-    size = 768
 
     # Define the payload to send.
     payload = {
