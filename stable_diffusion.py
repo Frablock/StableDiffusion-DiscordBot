@@ -1,3 +1,5 @@
+from dotenv import dotenv_values
+
 import requests
 import base64
 
@@ -8,7 +10,7 @@ import random
 import os
 
 # Define the URL and the payload to send.
-url = "http://127.0.0.1:7860"
+url = dotenv_values(".env")["URL_SD"]
 
 async def get_image(aid, txt="", n_txt=""):
         
