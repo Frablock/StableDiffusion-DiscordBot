@@ -1,4 +1,4 @@
-{"locale":"en-GB", "author":"Frablock", "translation":{
+{"locale":"en_GB", "author":"Frablock", "translation":{
     "waiting_message.0" : "Please wait while the hamster in the CPU spins its wheel.",
     "waiting_message.1" : "Please wait, we are trying to convince the electrons to move faster.",
     "waiting_message.2" : "We are taking a coffee break with the server, it shouldn't take too long.",
