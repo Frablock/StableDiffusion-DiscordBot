@@ -48,6 +48,8 @@ TOKEN = dotenv_values(".env")["TOKEN"]
 
 bot = interactions.Client(token=TOKEN)
 
+MAX_BATCH_SIZE = str(dotenv_values(".env")["MAX_BATCH_SIZE"])
+
 @listen()  # this decorator tells snek that it needs to listen for the corresponding event, and run this coroutine
 async def on_ready():
     # This event is called when the bot is ready to respond to commands
@@ -67,20 +69,31 @@ async def on_ready():
     required=False,
     opt_type=OptionType.STRING
 )
-async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = ""):
+@slash_option(
+    name="batch_size",
+    description="How many image ? [1-"+MAX_BATCH_SIZE+"]",
+    required=False,
+    opt_type=OptionType.INTEGER
+)
+async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "", batch_size: int =1):
+    if not 1<=batch_size<=int(MAX_BATCH_SIZE):
+        await ctx.send(content="Invalid Batch Size, the batch must be between 1 and "+MAX_BATCH_SIZE,ephemeral=True)
+        return
+
     await ctx.send(random.choice(messages_attente), ephemeral=True)
 
-    image = await get_image(ctx.author,prompt,negative_prompt)
+    for i in range(batch_size):
+        image = await get_image(ctx.author,prompt,negative_prompt)
 
-    embed = Embed(
-        title="Processing complete!",
-        description="[Prompt] ```"+prompt+"```\n[Negatives] ```"+negative_prompt+" ```",
-        footer="Do you want to use the image ? check the /credit command"
-    )
+        embed = Embed(
+            title="Processing complete!" if batch_size==1 else "Processing complete "+str(i+1)+"/"+str(batch_size),
+            description="[Prompt] ```"+prompt+"```\n[Negatives] ```"+negative_prompt+" ```",
+            footer="Do you want to use the image ? check the /credit command"
+        )
 
-    # Send the response after processing is complete
-    await ctx.send(embed=embed, files=[image])
-    os.remove(image)
+        # Send the response after processing is complete
+        await ctx.send(embed=embed, files=[image])
+        os.remove(image)
     
 @slash_command(name="transform", description="Transform a picture using StableDiffusion")
 @slash_option(
@@ -107,28 +120,39 @@ async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "
     required=False,
     opt_type=OptionType.NUMBER
 )
-async def transform(ctx: SlashContext, image_url: str, prompt: str = "", negative_prompt: str = "", denoising: float = 0.5):
+@slash_option(
+    name="batch_size",
+    description="How many image ? [1-"+MAX_BATCH_SIZE+"]",
+    required=False,
+    opt_type=OptionType.INTEGER
+)
+async def transform(ctx: SlashContext, image_url: str, prompt: str = "", negative_prompt: str = "", denoising: float = 0.5, batch_size=1):
+    if not 1<=batch_size<=int(MAX_BATCH_SIZE):
+        await ctx.send(content="Invalid Batch Size, the batch must be between 1 and "+MAX_BATCH_SIZE,ephemeral=True)
+        return
+
     await ctx.send(random.choice(messages_attente), ephemeral=True)
 
     if not 0<=denoising<=1:
         await ctx.send("Incorrect denoising",ephemeral=True)
         return
-        
-    try:
-        image = await img2img(ctx.author,image_url,prompt,negative_prompt, denoising)
-    except Exception as e:
-        await ctx.send(str(e)+"\nI can't access to this image, please ensure that you give me a working url next time",ephemeral=True)
-        return
+    
+    for i in range(batch_size):
+        try:
+            image = await img2img(ctx.author,image_url,prompt,negative_prompt, denoising)
+        except Exception as e:
+            await ctx.send(str(e)+"\nI can't access to this image, please ensure that you give me a working url next time",ephemeral=True)
+            return
 
-    embed = Embed(
-        title="Processing complete!",
-        description="[Prompt] ```"+prompt+"```\n[Negatives] ```"+negative_prompt+" ```",
-        footer="Do you want to use the image ? check the /credit command",
-        images=[image_url]
-    )
-    # Send the response after processing is complete
-    await ctx.send(embed=embed, files=[image])
-    os.remove(image)
+        embed = Embed(
+            title="Processing complete!" if batch_size==1 else "Processing complete "+str(i+1)+"/"+str(batch_size),
+            description="[Prompt] ```"+prompt+"```\n[Negatives] ```"+negative_prompt+" ```",
+            footer="Do you want to use the image ? check the /credit command",
+            images=[image_url]
+        )
+        # Send the response after processing is complete
+        await ctx.send(embed=embed, files=[image])
+        os.remove(image)
     
 
 
