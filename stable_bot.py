@@ -295,7 +295,7 @@ async def on_modal_answer(ctx: ModalContext, maskcode_text: str):
 async def credit(ctx: SlashContext):
     embed = Embed(
         title="Credit",
-        description="Devs :\n- Frablock\n- Rypoint\n\nPowered by : \n- StableDiffusion (StabilityAI)\n - SD WebUI (AUTOMATIC1111)\n\nThe code is under the [GPLv3 licence](https://www.gnu.org/licenses/gpl-3.0.html)\n\nAll generated image are under the [CC4.0-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)\nWhen crediting, please use```Image generated with StableDiffusion by using https://github.com/Frablock/StableDiffusion-DiscordBot.```",
+        description="Devs :\n- Frablock\n- Rypoint\n\nPowered by : \n- StableDiffusion (StabilityAI)\n - SD WebUI (AUTOMATIC1111)\n\nThe code is under the [GPLv3 licence](https://www.gnu.org/licenses/gpl-3.0.html)\n\nAll generated image are under the [CC4.0-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)\nWhen crediting, please use```Image generated with StableDiffusion by using https://github.com/Frablock/StableDiffusion-DiscordBot. Image under CC4.0-BY-NC-SA - https://creativecommons.org/licenses/by-nc-sa/4.0```",
         color=0xff0000 # Green color
     )
     await ctx.send(embed=embed)
