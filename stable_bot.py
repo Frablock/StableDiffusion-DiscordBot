@@ -116,16 +116,17 @@ async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "
 
         if is_nsfw and not ctx.channel.nsfw:
             await ctx.send(l.get(ctx.locale, "nsfw_detected"), ephemeral=True)
-            return
+            negative_prompt += "NFSW, nude, explicit, sexual"
+        else:
 
-        embed = Embed(
-            title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, "processing_complete_batch",i+1, batch_size),
-            description= l.get(ctx.locale, "description", prompt, negative_prompt) if negative_prompt!="" else l.get(ctx.locale, "description_neg", prompt),
-            footer=l.get(ctx.locale, "footer")
-        )
+            embed = Embed(
+                title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, "processing_complete_batch",i+1, batch_size),
+                description= l.get(ctx.locale, "description", prompt, negative_prompt) if negative_prompt!="" else l.get(ctx.locale, "description_neg", prompt),
+                footer=l.get(ctx.locale, "footer")
+            )
 
-        # Send the response after processing is complete
-        await ctx.send(embed=embed, files=[image])
+            # Send the response after processing is complete
+            await ctx.send(embed=embed, files=[image])
         os.remove(image)
     
 @slash_command(name="transform", description="Transform a picture using StableDiffusion")
