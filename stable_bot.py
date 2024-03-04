@@ -108,18 +108,17 @@ async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "
         return
 
     if not ctx.channel.nsfw:
-        negative_prompt += "NSFW, nude, explicit, sexual, nudity"
+        neg_prompt = negative_prompt + "NSFW, nude, explicit, sexual, nudity"
 
     await ctx.send(l.get(ctx.locale, random.choice(waiting_messages)), ephemeral=True)
 
     for i in range(batch_size):
-        image = await get_image(ctx.author,prompt,negative_prompt, size)
+        image = await get_image(ctx.author,prompt,neg_prompt, size)
 
         is_nsfw = detect_nsfw.detect_nsfw(image)
 
         if is_nsfw and not ctx.channel.nsfw:
             await ctx.send(l.get(ctx.locale, "nsfw_detected"), ephemeral=True)
-            negative_prompt += "NSFW, nude, explicit, sexual, nudity"
         else:
 
             embed = Embed(
