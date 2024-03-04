@@ -1,0 +1,7 @@
+dotenv
+discord-py-interactions
+discord.py
+asyncio
+Pillow
+tempfile
+transformers
