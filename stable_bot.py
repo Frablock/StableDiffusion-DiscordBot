@@ -108,6 +108,7 @@ async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "
         return
     if ctx.channel is None:
         await ctx.send(content=l.get(ctx.locale, "no_private_message", MAX_BATCH_SIZE),ephemeral=True)
+    neg_prompt=""
     if not ctx.channel.nsfw:
         neg_prompt = negative_prompt + "NSFW, nude, explicit, sexual, nudity"
 
