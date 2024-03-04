@@ -13,6 +13,7 @@
  - Prompt weighting : `(prompt:1.5)`
  - Batch output
  - Multiples image size
+ - NSFW Filter
 
 # Instalation
  - Install StableDiffusion (With AUTOMATIC1111 WebUI)
