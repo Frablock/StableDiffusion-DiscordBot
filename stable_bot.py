@@ -52,6 +52,8 @@ MAX_HEIGHT = int(dotenv_values(".env")["MAX_HEIGHT"])
 
 PROMPT_REQUIRED = int(dotenv_values(".env")["PROMPT_REQUIRED"])
 
+FIXED_SIZE_TXT2IMG = int(dotenv_values(".env")["FIXED_SIZE_TXT2IMG"])
+
 @listen()  # this decorator tells snek that it needs to listen for the corresponding event, and run this coroutine
 async def on_ready():
     # This event is called when the bot is ready to respond to commands
@@ -80,7 +82,7 @@ async def on_ready():
         SlashCommandChoice(name=SQUARE_IMG_SIZE, value=SQUARE_IMG_SIZE),
         SlashCommandChoice(name=LANDSCAPE_IMG_SIZE, value=LANDSCAPE_IMG_SIZE),
         SlashCommandChoice(name=PORTRAIT_IMG_SIZE, value=PORTRAIT_IMG_SIZE)
-    ]
+    ] if FIXED_SIZE_TXT2IMG else []
 )
 @slash_option(
     name="batch_size",
