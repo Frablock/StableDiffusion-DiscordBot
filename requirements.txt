@@ -4,3 +4,4 @@ discord.py
 asyncio
 Pillow
 transformers
+requests
