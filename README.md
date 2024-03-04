@@ -12,6 +12,7 @@
  - LoRA support : `<lora:lora_model:1>`
  - Prompt weighting : `(prompt:1.5)`
  - Batch output
+ - Multiples image size
 
 # Instalation
  - Install StableDiffusion (With AUTOMATIC1111 WebUI)
@@ -28,7 +29,6 @@
  - Remake Inpainting (Commands+Menu)
  - Finish the Localization
  - Make a command to show all the LoRAs
- - Choice between different ratio (SQUARE, TALL, WIDE)
 
 # Licence
 Copyright (C) 2024  Frablock
