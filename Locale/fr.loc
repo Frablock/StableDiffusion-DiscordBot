@@ -17,6 +17,7 @@
     "processing_complete" : "Voici votre image!",
     "processing_complete_batch" : "Voici votre image %$0/%$1",
     "description" : "[Prompt] ```%$0 ```\n[Anti-prompt] ```%$1 ```",
+    "description_neg" : "[Prompt] ```%$0 ```",
     "footer": "Vous souhaitez utiliser l'image ? Jetez un coup d'oeil à la commande /credit",
 
     "credit" : "Devs :\n- Frablock\n- Rypoint\n\nFonctionne grâce à : \n- StableDiffusion (StabilityAI)\n - SD WebUI (AUTOMATIC1111)\n\nLe code est sous licence [GPLv3 licence](https://www.gnu.org/licenses/gpl-3.0.html)\n\nToutes les images sont sous licence [CC4.0-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr)\nLorsque vous nous créditez, veuillez utiliser ```Image generaté via StableDiffusion en utilisant https://github.com/Frablock/StableDiffusion-DiscordBot. Image sous licence CC4.0-BY-NC-SA - https://creativecommons.org/licenses/by-nc-sa/4.0```"

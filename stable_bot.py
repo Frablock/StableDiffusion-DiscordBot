@@ -78,7 +78,7 @@ async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "
 
         embed = Embed(
             title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, "processing_complete_batch",i+1, batch_size),
-            description= l.get(ctx.locale, "description", prompt, negative_prompt),
+            description= l.get(ctx.locale, "description", prompt, negative_prompt) if negative_prompt!="" else l.get(ctx.locale, "description_neg", prompt),
             footer=l.get(ctx.locale, "footer")
         )
 
@@ -137,7 +137,7 @@ async def transform(ctx: SlashContext, image_url: str, prompt: str = "", negativ
 
         embed = Embed(
             title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, "processing_complete_batch",i+1, batch_size),
-            description= l.get(ctx.locale, "description", prompt, negative_prompt),
+            description= l.get(ctx.locale, "description", prompt, negative_prompt) if negative_prompt!="" else l.get(ctx.locale, "description_neg", prompt),
             footer=l.get(ctx.locale, "footer"),
             images=[image_url]
         )
@@ -291,7 +291,7 @@ async def on_component(event: Component):
 
             embed = Embed(
                 title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, "processing_complete_batch",i+1, batch_size),
-                description= l.get(ctx.locale, "description", prompt, negative_prompt),
+                description= l.get(ctx.locale, "description", prompt, negative_prompt) if negative_prompt!="" else l.get(ctx.locale, "description_neg", prompt),
                 footer=l.get(ctx.locale, "footer"),
                 images=[image_url]
             )
