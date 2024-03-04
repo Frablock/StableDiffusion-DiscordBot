@@ -14,6 +14,6 @@ fi
 # Activate the virtual environment
 source "$VENV_PATH/bin/activate"
 
-# Execute your script here
-# For example, if your script is named `my_script.py`, you can run it like this:
+pip -r install requirements.txt
+
 python start.py

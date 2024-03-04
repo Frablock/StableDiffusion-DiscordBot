@@ -13,6 +13,6 @@ if not exist "%VENV_PATH%" (
 REM Activate the virtual environment
 call "%VENV_PATH%\Scripts\activate.bat"
 
-REM Execute your script here
-REM For example, if your script is named `my_script.py`, you can run it like this:
+pip -r install requirements.txt
+
 python start.py
