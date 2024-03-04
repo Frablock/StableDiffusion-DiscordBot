@@ -11,13 +11,16 @@ import os
 
 # Define the URL and the payload to send.
 url = dotenv_values(".env")["URL_SD"]
+STEPS = dotenv_values(".env")["STEPS"]
 
-async def get_image(aid, txt="", n_txt=""):
+async def get_image(aid, txt="", n_txt="", size:tuple=(512,512)):
         
     payload = {
         "prompt": txt,
         "negative_prompt": n_txt,
-        "steps": 20
+        "steps": STEPS,
+        "width": size[0],
+        "height": size[1],
     }
     
     # Send said payload to said URL through the API.
@@ -68,7 +71,7 @@ async def sd_inpaint(aid, im, mask_im, p_env, n_p_mod="", denoising=0.75):
             "prompt": p_env,
             "negative_prompt": n_p_mod,
             "denoising_strength": denoising,
-            "steps": 20,
+            "steps": STEPS,
             "width": img_size[0],
             "height": img_size[1],
             "mask": mask_base64,
@@ -110,7 +113,7 @@ async def img2img(aid, im, p_env="", n_p_mod="", denoising=0.6):
             "prompt": p_env,
             "negative_prompt": n_p_mod,
             "denoising_strength": denoising,
-            "steps": 20,
+            "steps": STEPS,
             "width": img_size[0],
             "height": img_size[1],
         }

@@ -9,7 +9,7 @@ from dotenv import dotenv_values
 
 from stable_diffusion import *
 
-from interactions import OptionType, slash_option, slash_command, SlashContext, Embed
+from interactions import OptionType, slash_option, slash_command, SlashContext, Embed, SlashCommandChoice
 import interactions
 
 from interactions import Client, Intents, listen
@@ -41,6 +41,15 @@ bot = interactions.Client(token=TOKEN)
 
 MAX_BATCH_SIZE = str(dotenv_values(".env")["MAX_BATCH_SIZE"])
 
+DEFAULT_IMG_RATIO = dotenv_values(".env")["DEFAULT_IMG_RATIO"]
+
+SQUARE_IMG_SIZE  = str(dotenv_values(".env")["SQUARE_IMG_SIZE"])+"x"+str(dotenv_values(".env")["SQUARE_IMG_SIZE"])
+LANDSCAPE_IMG_SIZE  = dotenv_values(".env")["LANDSCAPE_IMG_SIZE"]
+PORTRAIT_IMG_SIZE = dotenv_values(".env")["PORTRAIT_IMG_SIZE"]
+
+MAX_WIDTH = int(dotenv_values(".env")["MAX_WIDTH"])
+MAX_HEIGHT = int(dotenv_values(".env")["MAX_HEIGHT"])
+
 @listen()  # this decorator tells snek that it needs to listen for the corresponding event, and run this coroutine
 async def on_ready():
     # This event is called when the bot is ready to respond to commands
@@ -61,20 +70,41 @@ async def on_ready():
     opt_type=OptionType.STRING
 )
 @slash_option(
+    name="size",
+    description="Choose a size [10, "+str(MAX_WIDTH)+"]x[10, "+str(MAX_WIDTH)+"]",
+    required=False,
+    opt_type=OptionType.STRING,
+    choices=[
+        SlashCommandChoice(name=SQUARE_IMG_SIZE, value=SQUARE_IMG_SIZE),
+        SlashCommandChoice(name=LANDSCAPE_IMG_SIZE, value=LANDSCAPE_IMG_SIZE),
+        SlashCommandChoice(name=PORTRAIT_IMG_SIZE, value=PORTRAIT_IMG_SIZE)
+    ]
+)
+@slash_option(
     name="batch_size",
     description="How many image ? [1-"+MAX_BATCH_SIZE+"]",
     required=False,
     opt_type=OptionType.INTEGER
 )
-async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "", batch_size: int =1):
+async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "", size: str = "",batch_size: int =1):
     if not 1<=batch_size<=int(MAX_BATCH_SIZE):
         await ctx.send(content=l.get(ctx.locale, "invalid_batch_size", MAX_BATCH_SIZE),ephemeral=True)
+        return
+
+    if size=="":
+        size = {"SQUARE":SQUARE_IMG_SIZE, "LANDSCAPE":LANDSCAPE_IMG_SIZE, "PORTRAIT":PORTRAIT_IMG_SIZE}.get("DEFAULT_IMG_RATIO", SQUARE_IMG_SIZE)
+
+    size = size.split("x")
+    size[0] = int(size[0])
+    size[1] = int(size[1])
+    if not (10<=size[0]<=MAX_WIDTH and 10<=size[1]<=MAX_HEIGHT):
+        await ctx.send(content=l.get(ctx.locale, "invalid_size", MAX_BATCH_SIZE),ephemeral=True)
         return
 
     await ctx.send(l.get(ctx.locale, random.choice(waiting_messages)), ephemeral=True)
 
     for i in range(batch_size):
-        image = await get_image(ctx.author,prompt,negative_prompt)
+        image = await get_image(ctx.author,prompt,negative_prompt, size)
 
         embed = Embed(
             title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, "processing_complete_batch",i+1, batch_size),
