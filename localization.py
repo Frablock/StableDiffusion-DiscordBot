@@ -17,7 +17,7 @@ def get(locale, text_id, *args):
 
             if result == text_id:
                 file = "./Locale/"+default+".loc"
-                 with open(file, "r", encoding="utf-8") as json_file:
+                with open(file, "r", encoding="utf-8") as json_file:
                     parsed_json = json.load(json_file)
                     result = parsed_json["translation"].get(text_id, text_id)
 
