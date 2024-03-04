@@ -30,6 +30,8 @@ import mask
 
 import localization as l
 
+import detect_nsfw
+
 waiting_messages = ["waiting_message."+str(i) for i in range(10)]
 
 
@@ -109,6 +111,11 @@ async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "
 
     for i in range(batch_size):
         image = await get_image(ctx.author,prompt,negative_prompt, size)
+
+        is_nsfw = detect_nsfw.detect_nsfw(image)
+
+        if is_nsfw and not ctx.channel.nsfw:
+            await ctx.send(l.get(ctx.locale, "nsfw_detected"), ephemeral=True)
 
         embed = Embed(
             title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, "processing_complete_batch",i+1, batch_size),

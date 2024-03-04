@@ -33,7 +33,7 @@ async def get_image(aid, txt="", n_txt="", size:tuple=(512,512)):
     # Decode and save the image.
     with open(iid, 'wb') as f:
         f.write(base64.b64decode(r['images'][0]))
-    
+
     return iid
 
 def img_to_base64(img_url):
