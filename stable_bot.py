@@ -50,6 +50,8 @@ PORTRAIT_IMG_SIZE = dotenv_values(".env")["PORTRAIT_IMG_SIZE"]
 MAX_WIDTH = int(dotenv_values(".env")["MAX_WIDTH"])
 MAX_HEIGHT = int(dotenv_values(".env")["MAX_HEIGHT"])
 
+PROMPT_REQUIRED = int(dotenv_values(".env")["PROMPT_REQUIRED"])
+
 @listen()  # this decorator tells snek that it needs to listen for the corresponding event, and run this coroutine
 async def on_ready():
     # This event is called when the bot is ready to respond to commands
@@ -60,7 +62,7 @@ async def on_ready():
 @slash_option(
     name="prompt",
     description="What you want to see",
-    required=False,
+    required=PROMPT_REQUIRED,
     opt_type=OptionType.STRING
 )
 @slash_option(
