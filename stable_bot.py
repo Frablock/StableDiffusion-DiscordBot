@@ -116,6 +116,7 @@ async def generate(ctx: SlashContext, prompt: str = "", negative_prompt: str = "
 
         if is_nsfw and not ctx.channel.nsfw:
             await ctx.send(l.get(ctx.locale, "nsfw_detected"), ephemeral=True)
+            return
 
         embed = Embed(
             title= l.get(ctx.locale, "processing_complete") if batch_size==1 else l.get(ctx.locale, "processing_complete_batch",i+1, batch_size),
